@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Download Data</h1>
+    <p>This is a beta version of the data available on this website.</p></div>
+
+<div class="container">
+    <form action="/data/download_file" method="post" class="form-horizontal">
+        <div class="form-group">
+
+
+            <!-- Checkboxes to select sensors-->
+            <!-- Automatically populate using mysql query; refer to blueprints/data/views.py -->
+            <div class="row">
+                <div class='col-md-12'>
+
+                    <p>
+                    <h4>Choose at least one sensor:</h4>
+
+
+                    {% for mote, name, attributes in sensors %}
+                    <ol>
+                        {{ name }}
+                        <!-- for additional motes, use the below line -->
+                        <!-- {{ mote }} at {{ name }} Station -->
+                        {% for attribute in attributes %}
+                        <ol>
+                            <input type="checkbox" name="attributes" value="{{ mote, attribute }}"/> {{ attribute }}
+                        </ol>
+
+                        {% endfor %}
+                    </ol>
+                    {% endfor %}
+
+                    <p><input type="checkbox" id="selectall" onClick="selectAll(this)"/> Select All<br/></p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- First input box -->
+        <div class="row">
+            <p><h4>Choose a time range:</h4></p>
+
+            <div class='col-md-6'>
+                <div class="form-group">
+                <label for="datetimepicker1">Start:</label>
+                    <div class='input-group date'>
+                        <input type='text' class="form-control" id='datetimepicker1' name="date_start"/>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Second input box -->
+
+            <div class='col-md-6'>
+                <div class="form-group">
+                <label for="datetimepicker2">End:</label>
+                    <div class='input-group date'>
+                        <input type='text' class="form-control" id='datetimepicker2' name="date_end"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button -->
+        <br/>
+        <div class="form-group">
+            <div class="row">
+                <div class='col-md-10 text-right'>
+                    <button class="btn btn-info btn-lg" name="form" style="float: right;">Download</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </form>
+
+</div>
+
+
+<br/>
+<br/>
+
+
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+
+
+<script language="javascript">
+    function selectAll(source) {
+        checkboxes = document.getElementsByName('attributes');
+        for(var i in checkboxes)
+            checkboxes[i].checked = source.checked;
+    }
+
+</script>
+
+
+<script type="text/javascript">
+jQuery(function(){
+ jQuery('#datetimepicker1').datetimepicker({
+  format:'Y/m/d h:i',
+  onShow:function( ct ){
+   this.setOptions({
+    //maxDate: false // default
+    //maxDate: 0 // this sets it to today
+    //maxDate: '2019/07/28' // this works
+
+    maxDate:$('#datetimepicker2').val()?$('#datetimepicker2').val().substring(0, 10):false
+
+    //maxTime: false // default
+    //maxTime: 0 // this sets it to current time
+    //maxTime: '06:00' // this sets it to a specific time
+
+   })
+
+   /* For testing purposes, turn on Developer Tools to see Console */
+   /*var md = $('#datetimepicker2').val()?$('#datetimepicker2').val().substring(0, 10):false
+   var mt = $('#datetimepicker2').val()?$('#datetimepicker2').val().substring(11, 16):false
+   console.log("maxDate: " + md);
+   console.log("length: " + md.length);
+   console.log("type: " + jQuery.type(md));
+   console.log("maxTime: " + mt);
+   */
+  }
+ });
+ jQuery('#datetimepicker2').datetimepicker({
+  format:'Y/m/d h:i',
+  onShow:function( ct ){
+   this.setOptions({
+    //minDate: false // default
+    //minDate: 0 // this sets it to today
+    //minDate: '2019/07/03' // this works
+    minDate: jQuery('#datetimepicker1').val()?jQuery('#datetimepicker1').val().substring(0, 10):false
+   })
+  }
+ });
+});
+
+
+
+
+
+// This code works only for Y/m/d
+/*jQuery(function(){
+ jQuery('#datetimepicker1').datetimepicker({
+  format:'Y/m/d',
+  onShow:function( ct ){
+   this.setOptions({
+    maxDate:jQuery('#datetimepicker2').val()?jQuery('#datetimepicker2').val():false
+   })
+
+   //var md = $('#datetimepicker2').val()?$('#datetimepicker2').val():false
+   //console.log("maxDate: " + md);
+   //console.log("length: " + md.length);
+  // console.log("type: " + jQuery.type(md));
+
+  },
+  timepicker:true
+ });
+ jQuery('#datetimepicker2').datetimepicker({
+  format:'Y/m/d',
+  onShow:function( ct ){
+   this.setOptions({
+    minDate:jQuery('#datetimepicker1').val()?jQuery('#datetimepicker1').val():false
+   })
+  },
+  timepicker:true
+ });
+});
+*/
+
+</script>
+
+{% endblock %}

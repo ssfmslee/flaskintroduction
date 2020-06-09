@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('users.profile') }}">&larr; Back to Profile</a></li>
+</ol>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Modify Your Profile</h1>
+    {% from "macros/forms.html" import render_field %}
+    <form method="post" role="form">
+      <div class="form-group">
+        {{ form.csrf_token }}
+      </div>
+      {{ render_field(form.first_name, class="form-control") }}
+      {{ render_field(form.last_name, class="form-control") }}
+      {{ render_field(form.email, class="form-control") }}
+      {{ render_field(form.old_password, class="form-control", placeholder="Old Password") }}
+      <div class="panel panel-danger">
+        <div class="panel-heading">Change Password</div>
+        <div class="panel-body">
+          <div class="well well-sm">Change your password below by entering in your new passwords otherwise leave blank to
+          leave it alone..</div>
+          {{ render_field(form.password, class="form-control", placeholder="Password") }}
+          {{ render_field(form.confirm, class="form-control", placeholder="Confirm password") }}
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success">Save Modifications</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

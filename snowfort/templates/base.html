@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Snowfort Control Panel{% endblock %}</title>
+    {% block css %}
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/snowfort.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/jquery.datetimepicker.css') }}" rel="stylesheet" />
+    {% endblock %}
+
+</head>
+<body>
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">WESensors</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li{% if 'index' == request.endpoint %} class="active"{% endif %}><a href="/">Home</a></li>
+
+          <!-- Public Download and Visualize Page - added Summer 2019 -->
+          <li{% if 'data.download' == request.endpoint %} class="active"{% endif %}>
+            <a href="{{ url_for('data.download') }}">Download</a></li>
+
+          {% if g.user %}
+          {% from "macros/navigations.html" import render_item_nav %}
+          <!-- Sensors -->
+          <!-- {% set sensor_nav = [
+            ('sensors.all', 'View Sensors'),
+            ('', ''),
+            ('sensors.new', 'New Sensor')
+          ] %}
+          {{ render_item_nav('sensors', 'Sensors', sensor_nav) }}
+          -->
+
+          <!-- Stations -->
+          {% set station_nav = [
+            ('stations.all', 'View Stations'),
+            ('', ''),
+            ('stations.new', 'New Station')
+          ] %}
+          {{ render_item_nav('stations', 'Visualize', station_nav) }}
+
+          <!-- Motes -->
+          {% set mote_nav = [
+            ('motes.all', 'View Motes'),
+            ('', ''),
+            ('motes.new', 'New Mote')
+          ] %}
+          {{ render_item_nav('motes', 'Motes', mote_nav) }}
+
+          <!-- Data -->
+          {% set datum_nav = [
+            ('data.all', 'View Data'),
+            ('', ''),
+            ('data.new', 'New Datum'),
+          ] %}
+          {{ render_item_nav('data', 'Data', datum_nav) }}
+
+          {% else %}
+
+          <li{% if 'stations.all' == request.endpoint %} class="active"{% endif %}>
+            <a href="{{ url_for('stations.all') }}">Visualize</a></li>
+
+          {% endif %}
+
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          {% if g.user %}
+          <li class="dropdown active">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ g.user.full_name() }} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ url_for('users.profile') }}">View Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="{{ url_for('users.edit') }}">Edit Profile</a></li>
+            </ul>
+          </li>
+          <li><a href="{{ url_for('users.logout') }}" onclick="return confirm('Are you sure you want to log out?')">Logout</a></li>
+          {% else %}
+          <li{% if 'users.register' == request.endpoint %} class="active"{% endif %}>
+            <a href="{{ url_for('users.register') }}">Register</a>
+          </li>
+          <li{% if 'users.login' == request.endpoint %} class="active"{% endif %}>
+            <a href="{{ url_for('users.login') }}">Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Alert Messages -->
+    {% for category, msg in get_flashed_messages(with_categories=true) %}
+    <div class="alert alert-dismissable alert-{{ category }}">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      {{ msg }}
+    </div>
+    {% endfor %}
+
+    <!-- Content -->
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">{% block footer %}{% endblock %}</div>
+  </div>
+
+  {% block script %}
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="{{ url_for('static', filename='js/jquery-2.1.0.min.js') }}"></script>
+
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/flot/excanvas.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/flot/jquery.flot.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/flot/jquery.flot.time.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/datetimepicker/jquery.datetimepicker.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/noty/jquery.noty.packaged.min.js') }}"></script>
+  <!-- Our Scripts -->
+  <script src="{{ url_for('static', filename='js/snowfort.js') }}"></script>
+  {% endblock %}
+</body>
+</html>

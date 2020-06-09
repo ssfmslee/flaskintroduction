@@ -1,0 +1,22 @@
+{% from "macros/forms.html" import render_field %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>{{ header }}</h1>
+    <form method="post" role="form">
+      <div class="form-group">
+        {{ form.csrf_token }}
+      </div>
+      {{ render_field(form.tag, class="form-control", placeholder="Mote tag") }}
+      {{ render_field(form.type, class="form-control", placeholder="Mote type") }}
+      {{ render_field(form.sampling, class="form-control", placeholder="Sampling") }}
+      {{ render_field(form.comment, class="form-control", placeholder="Comments") }}
+      {{ render_field(form.station, class="form-control") }}
+      {{ render_field(form.last_pkt, class="form-control") }}
+      {{ render_field(form.received, class="form-control") }}
+      {{ render_field(form.missed, class="form-control") }}
+      <div class="form-group">
+        <button type="submit" class="btn btn-success">{{ button }}</button>
+      </div>
+    </form>
+  </div>
+</div>

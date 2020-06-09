@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('data.all') }}">&larr; Back to All Data</a></li>
+  <li><a href="{{ url_for('data.view', id=datum.id) }}">&larr; Back to Datum {{ datum.id }}</a></li>
+</ol>
+{% set header = "Edit Datum" %}
+{% set button = "Modify Datum" %}
+{% include "data/_form.html" %}
+{% endblock %}

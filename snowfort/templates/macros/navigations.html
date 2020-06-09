@@ -1,0 +1,14 @@
+{% macro render_item_nav(endpoint, name, nav) %}
+<li class="dropdown{% if request.endpoint and endpoint in request.endpoint %} active{% endif %}">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ name }} <b class="caret"></b></a>
+  <ul class="dropdown-menu">
+    {% for nav_url, nav_name in nav %}
+      {% if nav_url == '' %}
+      <li class="divider"></li>
+      {% else %}
+      <li><a href="{{ url_for(nav_url) }}">{{ nav_name }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</li>
+{% endmacro %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 text-right">
+    <a href="{{ url_for('data.new') }}" class="btn btn-success">New Datum</a>
+  </div>
+
+</div>
+
+
+<br />
+
+{% set header_cols = [ 'ID', 'Mote Tag', 'Attribute', 'Value', 'Timestamp', 'Timeslot', 'Packet Number', 'Axis'] %}
+{% set data_cols = [ 'id', 'mote_tag', 'attribute', 'value', 'timestamp', 'timeslot', 'packet_num', 'axis' ] %}
+{% set title = 'All Data' %}
+{{ render_obj_table(title, header_cols, data_cols, data, 'panel-primary', 'data.view', 'data.edit') }}
+{% endblock %}

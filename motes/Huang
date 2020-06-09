@@ -1,0 +1,5 @@
+Huang          # mote name
+13              # mote id
+Huang/         # remote path
+/home/ec2-user/data/Huang/ # local path
+Huang_DATE.dat     # sample file name

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('motes.all') }}">&larr; Back to All Motes</a></li>
+</ol>
+
+{% set header_cols = [ 'ID', 'Tag', 'Type', 'Station', 'Sampling', 'Comments', 'Last Pkt Num', 'Received', 'Missed' ] %}
+{% set data_cols = [ 'id', 'tag', 'type', 'station', 'sampling', 'comment', 'last_pkt', 'received', 'missed' ] %}
+{% set title = 'Mote: ' + mote.tag %}
+{{ render_obj_table(title, header_cols, data_cols, [mote], 'panel-primary', None, 'motes.edit') }}
+
+{% set header_cols = [ 'ID', 'Mote Tag', 'Attribute', 'Value', 'Timestamp', 'Timeslot', 'Packet Number', 'Axis'] %}
+{% set data_cols = [ 'id', 'mote_tag', 'attribute', 'value', 'timestamp', 'timeslot', 'packet_num', 'axis' ] %}
+{% set title = 'Last 100 Data Points for Mote' %}
+{{ render_obj_table(title, header_cols, data_cols, data, 'panel-primary', 'data.view', 'data.edit') }}
+{% endblock %}

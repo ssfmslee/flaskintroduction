@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('data.all') }}">&larr; Back to All Data</a></li>
+</ol>
+
+{% set header_cols = [ 'ID', 'Mote Tag', 'Attribute', 'Value', 'Timestamp', 'Timeslot', 'Packet Number', 'Axis' ] %}
+{% set data_cols = [ 'id', 'mote_tag', 'attribute', 'value', 'timestamp', 'timeslot', 'packet_num', 'axis' ] %}
+{% set title = 'Datum' %}
+{{ render_obj_table(title, header_cols, data_cols, [datum], 'panel-primary', None, 'data.edit') }}
+{% endblock %}

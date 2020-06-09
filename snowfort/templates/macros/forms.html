@@ -1,0 +1,19 @@
+{% macro render_field(field) %}
+{% if field.errors %}
+  {% set css_class = 'form-group has-error has-feedback' %}
+{% else %}
+  {% set css_class = 'form-group' %}
+{% endif %}
+<div class="{{ css_class }}">
+  {{ field.label(class='control-label') }}
+  {{ field(class=kwargs.pop('class', ''), **kwargs) }}
+  {% if field.errors %}
+    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+  {% endif %}
+  <ul class="errors">
+    {% for error in field.errors %}
+    <li>{{ error|e }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endmacro %}

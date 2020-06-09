@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('stations.all') }}">&larr; Back to All Stations</a></li>
+  <li><a href="{{ url_for('stations.view', id=station.id) }}">&larr; Back to Station {{ station.name }}</a></li>
+</ol>
+{% set header = "Edit Station" %}
+{% set button = "Modify Station" %}
+{% include "stations/_form.html" %}
+{% endblock %}

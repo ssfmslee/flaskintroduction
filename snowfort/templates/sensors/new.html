@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('sensors.all') }}">&larr; Back to All Sensors</a></li>
+</ol>
+{% set header = "New Sensor" %}
+{% set button = "Create Sensor" %}
+{% include "sensors/_form.html" %}
+{% endblock %}

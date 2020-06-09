@@ -1,0 +1,28 @@
+body {
+  padding-top: 70px;
+}
+
+ul.errors {
+  list-style-type: square;
+  margin: 5px 0 0 0;
+  padding: 0 0 0 15px;
+}
+
+/* Graph Styles */
+.graph-tooltip {
+  background-color: #000000;
+  border-radius: 5px;
+  color: #ffffff;
+  display: none;
+  opacity: 0.90;
+  padding: 8px;
+  position: absolute;
+}
+
+.legendColorBox {
+  padding: 3px;
+}
+
+.legendLabel {
+  padding: 3px;
+}

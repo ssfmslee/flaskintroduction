@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 text-right">
+    <a href="{{ url_for('sensors.new') }}" class="btn btn-success">New Sensor</a>
+  </div>
+</div>
+<br />
+
+{% set header_cols = [ 'ID', 'Name', 'Attribute', 'Comments', 'c_1', 'c_2' ] %}
+{% set data_cols = [ 'id', 'name', 'attribute', 'comment', 'c_1', 'c_2' ] %}
+{% set title = 'All Sensors' %}
+{{ render_obj_table(title, header_cols, data_cols, sensors, 'panel-primary', 'sensors.view', 'sensors.edit') }}
+{% endblock %}

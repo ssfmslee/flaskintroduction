@@ -1,0 +1,12 @@
+.DS_Store
+
+# Ignore Swap/Edit files
+*.swp
+*~
+\#*#
+
+# Ignore Python Compiled Files
+*.pyc
+
+# Ignore database files
+*.db

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Register</h1>
+    {% from "macros/forms.html" import render_field %}
+    <form method="post" role="form">
+      <div class="form-group">
+        {{ form.csrf_token }}
+      </div>
+      {{ render_field(form.first_name, class="form-control", placeholder="First name") }}
+      {{ render_field(form.last_name, class="form-control", placeholder="Last name") }}
+      {{ render_field(form.email, class="form-control", placeholder="Email address") }}
+      {{ render_field(form.password, class="form-control", placeholder="Password") }}
+      {{ render_field(form.confirm, class="form-control", placeholder="Confirm password") }}
+      {{ render_field(form.code, class="form-control", placeholder="Registration code") }}
+      <div class="form-group">
+        <button type="submit" class="btn btn-success">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

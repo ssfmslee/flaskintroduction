@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 text-right">
+    <a href="{{ url_for('users.edit') }}" class="btn btn-success">Edit Profile</a>
+  </div>
+</div>
+<br />
+
+{% set header_cols = [ 'ID', 'First Name', 'Last Name', 'Email', 'Role' ] %}
+{% set data_cols = [ 'id', 'first_name', 'last_name', 'email', 'role' ] %}
+{% set title = 'User: ' + user.full_name() %}
+{{ render_obj_table(title, header_cols, data_cols, [user], 'panel-primary') }}
+{% endblock %}

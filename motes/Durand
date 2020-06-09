@@ -1,0 +1,5 @@
+Durand          # mote name
+14              # mote id
+Durand/         # remote path
+/home/ec2-user/data/Durand/ # local path
+Durand_DATE.dat     # sample file name

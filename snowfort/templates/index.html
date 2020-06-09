@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h1>WESensors</h1>
+  <p>Welcome to the SnowFort control panel for WESensors, the wireless sensor network of Stanford's Wind Engineering lab.
+    You may learn more about SnowFort <a href="http://web.stanford.edu/group/snowfort/" rel="noopener noreferrer"
+                                         target="_blank">here</a>.</p>
+    <!-- <a class="btn btn-info btn-lg" role="button" href="http://web.stanford.edu/group/snowfort/">Learn more</a>-->
+  <p>This map shows the current location of the sensors.</p>
+
+  <img src="{{ url_for('static', filename='images/WE_sensor_locations.png') }}" width="900" height="100%"
+       style="display: block; margin-left: auto; margin-right: auto;"/>
+
+</div>
+{% endblock %}

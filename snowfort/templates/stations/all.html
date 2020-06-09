@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+
+</br>
+<img src="{{ url_for('static', filename='images/WE_sensor_locations.png') }}" width="900" height="100%"
+       style="display: block; margin-left: auto; margin-right: auto;"/>
+</br>
+
+{% set title = 'All Stations' %}
+<!-- These column titles show up for a registered user -->
+{% set header_cols = [ 'ID', 'Name', 'Locations', 'Comments' ] %}
+{% set data_cols = [ 'id', 'name', 'location', 'comment' ] %}
+<!-- These column titles show up for a public user -->
+{% set public_header_cols = [ 'Name', 'Locations', 'Comments' ] %}
+{% set public_data_cols = [ 'name', 'location', 'comment' ] %}
+
+
+{% if g.user %}
+<div class="row">
+  <div class="col-md-12 text-right">
+    <a href="{{ url_for('stations.new') }}" class="btn btn-success">New Station</a>
+  </div>
+</div>
+<br />
+
+{{ render_obj_table(title, header_cols, data_cols, stations, 'panel-primary', 'stations.view', 'stations.edit') }}
+
+{% else %}
+{{ render_obj_table(title, public_header_cols, public_data_cols, stations, 'panel-primary', 'stations.view') }}
+
+{% endif %}
+
+{% endblock %}
+

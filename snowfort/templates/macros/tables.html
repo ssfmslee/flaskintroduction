@@ -1,0 +1,44 @@
+{% macro render_obj_table(title, header_cols, data_cols, objs, panel_type, view_route=None, edit_route=None) %}
+<div class="panel {{ panel_type }}">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><strong>{{ title }}</strong></div>
+
+  {% if objs|count == 0 %}
+  <div class="panel-body">
+    <p>There are no entities to display. Try creating something first!</p>
+  </div>
+  {% else %}
+  <!-- Table -->
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        {% if view_route: %}
+        <th><span class="glyphicon glyphicon-search"></span></th>
+        {% endif %}
+        {% if edit_route: %}
+        <th><span class="glyphicon glyphicon-pencil"></span></th>
+        {% endif %}
+        {% for col in header_cols: %}
+        <th>{{ col }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in objs: %}
+      <tr>
+        {% if view_route: %}
+        <td><a href="{{ url_for(view_route, id=obj.id) }}" alt="View" title="View"><span class="glyphicon glyphicon-search"></span></a></td>
+        {% endif %}
+        {% if edit_route: %}
+        <td><a href="{{ url_for(edit_route, id=obj.id) }}" alt="Edit" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a></td>
+        {% endif %}
+        {% for col in data_cols: %}
+        <td>{{ obj[col] }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endmacro %}

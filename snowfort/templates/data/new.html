@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('data.all') }}">&larr; Back to All Data</a></li>
+</ol>
+{% set header = "New Datum" %}
+{% set button = "Create Datum" %}
+{% include "data/_form.html" %}
+{% endblock %}

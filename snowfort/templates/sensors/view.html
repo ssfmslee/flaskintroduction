@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('sensors.all') }}">&larr; Back to All Sensors</a></li>
+</ol>
+
+{% set header_cols = [ 'ID', 'Name', 'Attribute', 'Comments', 'c_1', 'c_2' ] %}
+{% set data_cols = [ 'id', 'name', 'attribute', 'comment', 'c_1', 'c_2' ] %}
+{% set title = 'Sensor: ' + sensor.name %}
+{{ render_obj_table(title, header_cols, data_cols, [sensor], 'panel-primary', None, 'sensors.edit') }}
+{% endblock %}

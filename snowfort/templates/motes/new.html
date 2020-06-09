@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('motes.all') }}">&larr; Back to All Motes</a></li>
+</ol>
+{% set header = "New Mote" %}
+{% set button = "Create Mote" %}
+{% include "motes/_form.html" %}
+{% endblock %}

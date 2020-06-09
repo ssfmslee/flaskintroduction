@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 text-right">
+    <a href="{{ url_for('motes.new') }}" class="btn btn-success">New Mote</a>
+  </div>
+</div>
+<br />
+
+{% set header_cols = [ 'ID', 'Tag', 'Type', 'Station', 'Sampling', 'Comments', 'Last Pkt Num', 'Received', 'Missed' ] %}
+{% set data_cols = [ 'id', 'tag', 'type', 'station', 'sampling', 'comment', 'last_pkt', 'received', 'missed' ] %}
+{% set title = 'All Motes' %}
+{{ render_obj_table(title, header_cols, data_cols, motes, 'panel-primary', 'motes.view', 'motes.edit') }}
+{% endblock %}

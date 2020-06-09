@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('motes.all') }}">&larr; Back to All Motes</a></li>
+  <li><a href="{{ url_for('motes.view', id=mote.id) }}">&larr; Back to Mote {{ mote.tag }}</a></li>
+</ol>
+{% set header = "Edit Mote" %}
+{% set button = "Modify Mote" %}
+{% include "motes/_form.html" %}
+{% endblock %}

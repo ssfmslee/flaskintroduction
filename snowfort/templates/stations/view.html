@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% from "macros/tables.html" import render_obj_table %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('stations.all') }}">&larr; Back to All Stations</a></li>
+</ol>
+
+{% set header_cols = [ 'ID', 'Name', 'Location', 'Comments' ] %}
+{% set data_cols = [ 'id', 'name', 'location', 'comment' ] %}
+{% set title = 'Station: ' + station.name %}
+{{ render_obj_table(title, header_cols, data_cols, [station], 'panel-primary', None, 'stations.edit') }}
+
+<!-- Graph -->
+<div class="panel panel-info">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><i class="glyphicon glyphicon-picture"></i> <strong>Station Data</strong></div>
+  <div class="panel-body">
+    <div class="well">
+      <div class="row">
+        <form class="form-inline" role="form">
+          <!-- Functionality Selection -->
+          <div class="col-md-4">
+           <!-- Sensor Choice -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Choose Sensor <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" id="graph-sensor-selection">
+              </ul>
+            </div>
+            <!-- Real Time -->
+            <button type="button" class="btn btn-success" id="graph-real-time"></button>
+          </div>
+          <!-- Start and End -->
+          <div class="col-md-8">
+            <div class="pull-right">
+              <div class="form-group">
+                <label for="graph-start">Start:</label>
+                <input type="text" class="form-control" id="graph-start">
+              </div>
+              <div class="form-group">
+                <label for="graph-end">End:</label>
+                <input type="text" class="form-control" id="graph-end">
+              </div>
+              <div class="form-group">
+                <button type="button" class="form-control btn btn-info" id="graph-time-go">Go</button>
+                <button type="button" class="form-control btn btn-danger" id="graph-time-reset">Clear</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="text-center"><h3 id="graph-title">{{ sensors[0].attribute|capitalize }}</h3></div>
+    <div id="graph-placeholder" style="height:300px"></div>
+    <br />
+    <div class="well">
+      <div id="graph-legend"></div>
+    </div>
+    <br />
+     
+       
+  </div>
+</div>
+
+<!-- Motes -->
+{% set header_cols = [ 'ID', 'Tag', 'Type', 'Comments', 'Last Pkt Num', 'Received', 'Missed' ] %}
+{% set data_cols = [ 'id', 'tag', 'type', 'comment', 'last_pkt', 'received', 'missed' ] %}
+{% set title = 'Motes for ' + station.name %}
+{{ render_obj_table(title, header_cols, data_cols, motes, 'panel-default', 'motes.view') }}
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script type="text/javascript">
+$(function() {
+  {% if sensors|count > 0 %}
+  /* Set up the graph to be used on this page. */
+  var graph = new Graph("graph-placeholder", "graph-legend", "/data/station", "{{ station.id }}", "{{ sensors[0].attribute }}");
+  graph.setUpRealTime("graph-real-time");
+  graph.setUpDatePicker("graph-start", "graph-end", "graph-time-go", "graph-time-reset");
+  graph.render();
+
+  /* Set up the sensor selector drop down to change the graph. */
+  var selection = document.getElementById("graph-sensor-selection");
+  var title = document.getElementById("graph-title");
+  var li, a;
+  {% for sensor in sensors: %}
+  li = document.createElement("li");
+  a = document.createElement("a");
+  a.href = "#";
+  a.innerHTML = "{{ sensor.attribute|capitalize }}";
+  a.onclick = function (event) {
+    graph.updateAttribute("{{ sensor.attribute }}");
+    title.innerHTML = "{{ sensor.attribute|capitalize }}";
+    event.preventDefault();
+  };
+  li.appendChild(a);
+  selection.appendChild(li);
+  {% endfor %}
+
+  {% endif %}
+});
+
+// Add javascript for datetimepicker 
+/*
+$(function () {
+    $('#datetimepicker1').datetimepicker();
+});
+*/
+
+// Add javascript for datetimepicker in both inputs
+/*$(function () {
+    $('#datetimepicker1').datetimepicker();
+    $('#datetimepicker2').datetimepicker({
+        useCurrent: false
+    });
+    $("#datetimepicker2").on("dp.change", function (e) {
+        $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepicker1").on("dp.change", function (e) {
+        $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+    });
+});
+*/
+</script>
+
+
+{% endblock %}
